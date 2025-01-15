@@ -1,0 +1,89 @@
+.image{
+  max-width: 400px;
+  max-height: 600px;
+  position: relative;
+  transition: background-color 0.2s;
+
+
+  &__self{
+    border-radius: 10%;
+    margin-bottom: 10px;
+    max-width: 100%;
+    break-inside: avoid;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  &__safe{
+    position: absolute;
+    width: 50%;
+    height: 50px;
+    right: 0;
+    top: 0;
+    margin: 10px;
+
+    border-radius: 40px;
+    border: none;
+
+    background-color: #05aaad;
+    color: white;
+    transition: background-color 0.2s;
+
+    font-family: "Lexend", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bolder;
+
+    &:hover{
+      background-color: #047d80;
+      cursor: pointer;
+    }
+  }
+
+  &__block{
+
+    background-color: white;
+    transition: background-color 0.2s;
+
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    scale: 0.8;
+
+    padding: 10px;
+
+    border-radius: 30px;
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    margin: 10px;
+
+
+    &:hover{
+      cursor: pointer;
+      background-color: #dcdcdc;
+    }
+
+    &__download{
+      width: 20px;
+      height: 20px;
+      padding: 15px;
+
+      scale: 0.7;
+
+      background-image: url('../../public/img/download.svg');
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+
+}

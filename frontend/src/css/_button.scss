@@ -1,0 +1,41 @@
+
+
+.button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor:default;
+  :nth-child(1){
+    border-radius: 20px;
+    border: #ffffff;
+    background-color: white;
+    color: #000000;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
+
+.button-active{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor:default;
+  :nth-child(1){
+    scale: 1.2;
+    padding: 7px 9px 7px 9px;
+    border-radius: 20px;
+    border: 0 black solid;
+    background-color: black;
+    color: white;
+    &:hover{
+      cursor: pointer;
+      background-color: #333333;
+    }
+  }
+
+}
