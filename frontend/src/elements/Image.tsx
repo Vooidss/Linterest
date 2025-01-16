@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import {Images} from "../pages/ImagesPage";
 
-export default function Image({ link }: Images) {
+export default function Image({ link }: Images, key:bigint) {
     const [isHover, setIsHover] = useState(false);
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        //TODO: ПЕРЕДЕЛАТЬ ПОТОМ ПОД ID КАЖДОЙ КАРТИНКИ
+        navigate(`/pins/image`)
+    }
+
+    function downloadImage(imageUrl: string, fileName: string): void {
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = fileName;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+    }
+
 
     return (
         <div className="image"
@@ -28,10 +48,13 @@ export default function Image({ link }: Images) {
                     Сохранить
                 </button>
                 <div className="image__block">
-                    <div className="image__block__download"></div>
+                    <a href = {link} download>
+                        <img className="image__block__download" src = {link} alt = "хуй"/>
+                    </a>
                 </div>
             </div>
             <img
+                onClick={() => handleClick()}
                 className="image__self"
                 src={link}
                 alt="Картинка"
