@@ -17,6 +17,7 @@
 
   &__safe{
     position: absolute;
+    z-index: 1;
     width: 50%;
     height: 50px;
     right: 0;
@@ -26,7 +27,7 @@
     border-radius: 40px;
     border: none;
 
-    background-color: #05aaad;
+    background-color: var(--main-background);
     color: white;
     transition: background-color 0.2s;
 
@@ -46,6 +47,7 @@
     background-color: white;
     transition: background-color 0.2s;
 
+    z-index: 1;
 
     width: 40px;
     height: 40px;

@@ -29,32 +29,18 @@ export default function Image({ link }: Images, key:bigint) {
              onMouseEnter={() => setIsHover(true)}
              onMouseLeave={() => setIsHover(false)}
         >
-            <div
-                style={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.49)',
-                    position: 'absolute',
-                    zIndex: 100,
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '10%',
-                    top: 0,
-                    left: 0,
-                    display: isHover ? 'block' : 'none',
-                    transition: 'background-color 0.3s',
-                    cursor:"pointer"
-                }}
-            >
+            {isHover ?
                 <button className="image__safe">
                     Сохранить
-                </button>
+                </button> : ""}
+            {isHover ?
                 <div className="image__block">
-                    <a href = {link} download>
-                        <img className="image__block__download" src = {link} alt = "хуй"/>
+                    <a className="image__block__download" href={link} download>
                     </a>
-                </div>
-            </div>
+                </div> : ""}
             <img
                 onClick={() => handleClick()}
+                style={{filter: isHover ? "brightness(50%)" : "none"}}
                 className="image__self"
                 src={link}
                 alt="Картинка"

@@ -1,20 +1,25 @@
 import React, {useState} from 'react';
-import Button from './button'
-import { NavLink } from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 
 
 export default function Header(){
 
+    const navigate = useNavigate();
+
     const activeLink: string = "button-active";
     const defaultLink: string = "button";
+
+    const handleClick = () => {
+        navigate(`/pins`)
+    }
 
     return(
         <div className="header">
             <div className="header__start">
                 <div className="header__start__logo">
-                    <div className="header__start__logo__img"/>
+                    <div className="header__start__logo__img" onClick={() => handleClick()}/>
                 </div>
                 <NavLink to={"/pins"} className={({isActive}) => isActive ? activeLink : defaultLink}>
                     <button className="button">Главная</button>

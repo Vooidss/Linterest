@@ -4,7 +4,6 @@ import Image from '../elements/Image'
 export default function ImagesPage (){
 
     const [images, setImages] = useState<Images[]>([
-        {link: "logo2.png"},
         {link:"https://i.pinimg.com/736x/79/03/da/7903da869765768a137ebf67df93bae0.jpg"},
         {link:"https://i.pinimg.com/736x/ff/97/b6/ff97b699d6056a32c5d7d736fb165752.jpg"},
         {link:"https://i.pinimg.com/736x/71/a9/16/71a916609bee65812de8af59bc872645.jpg"},
