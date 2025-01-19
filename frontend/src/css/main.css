@@ -177,31 +177,58 @@
 .create-page__mainblock__create-block__description-icon {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
-.create-page__mainblock__create-block__description-icon__tags {
-  margin: 0 auto;
+.create-page__mainblock__create-block__description-icon__choose-tags {
+  display: flex;
+  gap: 10px;
+  margin: 0 20px 20px 20px;
+}
+.create-page__mainblock__create-block__description-icon__choose-tags #choose-tag {
+  padding: 5px;
+  border: 1px var(--border-line) solid;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+  user-select: none;
+}
+.create-page__mainblock__create-block__description-icon__choose-tags #choose-tag p {
+  padding: 4px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.create-page__mainblock__create-block__description-icon__search-tag {
+  position: relative;
+}
+.create-page__mainblock__create-block__description-icon__search-tag__tags {
+  position: absolute;
+  right: 0;
   border: 0;
   box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
-  width: 300px;
+  width: 400px;
   height: 150px;
   overflow-y: auto;
   overflow-x: auto;
   user-select: none;
+  background-color: white;
   z-index: 10;
+  font-size: 20px;
 }
-.create-page__mainblock__create-block__description-icon__tags #option {
+.create-page__mainblock__create-block__description-icon__search-tag__tags #option {
   padding: 2px 0 0 10px;
 }
-.create-page__mainblock__create-block__description-icon__tags #option:hover {
+.create-page__mainblock__create-block__description-icon__search-tag__tags #option:hover {
   background-color: rgba(185, 185, 185, 0.65);
   cursor: pointer;
 }
-.create-page__mainblock__create-block__description-icon__tags #default {
+.create-page__mainblock__create-block__description-icon__search-tag__tags #default {
   border-bottom: 1px var(--border-line) solid;
 }
-.create-page__mainblock__create-block__description-icon__tags #default p {
-  font-size: 15px;
+.create-page__mainblock__create-block__description-icon__search-tag__tags #default p {
+  font-size: 13px;
   font-weight: normal;
   padding: 2px 0 0 10px;
   color: rgba(54, 54, 54, 0.75);
@@ -264,6 +291,7 @@
   border-radius: 10%;
   margin-bottom: 10px;
   max-width: 100%;
+  background-color: black;
   break-inside: avoid;
 }
 .image__self:hover {

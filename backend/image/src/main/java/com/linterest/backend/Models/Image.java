@@ -1,12 +1,16 @@
 package com.linterest.backend.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.micrometer.core.instrument.Tags;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -29,15 +33,23 @@ public class Image {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "fileName")
+    private String fileName;
+
+    @Column(name = "contentType")
+    private String contentType;
+
     @ManyToMany
     @JoinTable(
             name = "image_tag",
             joinColumns = @JoinColumn(name = "image_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<TagsForImage> tags = new HashSet<>();
+    @JsonManagedReference
+    private List<TagsForImage> tags = new ArrayList<>();
 
 
     @Lob
+    @JsonIgnore
     private byte[] image;
 }

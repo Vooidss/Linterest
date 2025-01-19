@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom'
 import {Images} from "../pages/ImagesPage";
 
-export default function Image({ link }: Images, key:bigint) {
+export default function Image({name,image,contentType,fileName}:Images,key:bigint) {
     const [isHover, setIsHover] = useState(false);
     const navigate = useNavigate();
 
@@ -11,7 +11,15 @@ export default function Image({ link }: Images, key:bigint) {
         navigate(`/pins/image`)
     }
 
-    function downloadImage(imageUrl: string, fileName: string): void {
+    useEffect(() => {
+        console.log(contentType)
+    }, []);
+
+
+    function downloadImage(image: any): void {
+        const blob = new Blob([image], { type: contentType });
+        const imageUrl = window.URL.createObjectURL(blob);
+
         const link = document.createElement('a');
         link.href = imageUrl;
         link.download = fileName;
@@ -35,14 +43,14 @@ export default function Image({ link }: Images, key:bigint) {
                 </button> : ""}
             {isHover ?
                 <div className="image__block">
-                    <a className="image__block__download" href={link} download>
+                    <a className="image__block__download" onClick={() => downloadImage(image)}>
                     </a>
                 </div> : ""}
             <img
                 onClick={() => handleClick()}
                 style={{filter: isHover ? "brightness(50%)" : "none"}}
                 className="image__self"
-                src={link}
+                src = {`data:${contentType};base64,${image}`}
                 alt="Картинка"
             />
         </div>

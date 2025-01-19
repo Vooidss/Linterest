@@ -15,4 +15,7 @@ public interface TagRepository extends JpaRepository<TagsForImage, Long> {
 
     @Query("SELECT COUNT(t) FROM TagsForImage t WHERE t.name LIKE CONCAT(:word, '%')")
     Integer countTagsByLetters(@Param("word") String word);
+
+    @Query("SELECT t FROM TagsForImage t WHERE t.id = :id")
+    TagsForImage findTagById(@Param("id") Integer id);
 }
