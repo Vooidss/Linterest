@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import Image from "../elements/Image"
+import {Images} from "../Interfaces/Images"
 
 export default function ImagesPage (){
 
@@ -20,18 +21,9 @@ export default function ImagesPage (){
         <div className="image_page">
             <div className="image_page__board">
                 {images.map((image,index) =>
-                    <Image image = {image.image} key = {index}  description={image.description} name={image.name} contentType={image.contentType} fileName={image.fileName}/>
+                    <Image id = {image.id} image = {image.image} key = {index} contentType={image.contentType} fileName={image.fileName}/>
                 )}
             </div>
         </div>
     )
 }
-
-export interface Images{
-    name: string
-    description: string
-    contentType: string
-    fileName: string
-    image: any
-}
-

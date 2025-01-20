@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class ImageDTOV2 {
+    private Long id;
     private String name;
     private String description;
     private String fileName;

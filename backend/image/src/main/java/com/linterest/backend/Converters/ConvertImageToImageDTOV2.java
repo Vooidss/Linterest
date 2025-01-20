@@ -22,6 +22,7 @@ public class ConvertImageToImageDTOV2 implements Convert<ImageDTOV2, Image> {
         image.setContentType(obj.getContentType());
         image.setFileName(obj.getFileName());
         image.setImage(obj.getImage());
+        image.setId(obj.getId());
         return image;
     }
 }

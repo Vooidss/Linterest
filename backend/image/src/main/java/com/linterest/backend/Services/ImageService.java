@@ -4,12 +4,10 @@ import com.linterest.backend.Converters.ConvertByteToMultipartFile;
 import com.linterest.backend.Converters.ConvertImageToImageDTOV2;
 import com.linterest.backend.DTO.ImageDTO;
 import com.linterest.backend.DTO.ImageDTOV2;
-import com.linterest.backend.DTO.Response.CreateImageResponse;
-import com.linterest.backend.DTO.Response.DefaultResponse;
-import com.linterest.backend.DTO.Response.ImagesResponse;
-import com.linterest.backend.DTO.Response.Response;
+import com.linterest.backend.DTO.Response.*;
 import com.linterest.backend.Models.Image;
 import com.linterest.backend.Repositories.ImageRepositories;
+import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -69,7 +68,6 @@ public class ImageService {
         List<Image> images = imagePage.getContent();
         List<ImageDTOV2> resultImages= images.stream().map(convertImageToImageDTOV2::convert).toList();
 
-
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(
                 ImagesResponse.builder()
                         .images(resultImages)
@@ -79,4 +77,18 @@ public class ImageService {
                         .build()
         );
     }
+
+    public ResponseEntity<DefiniteImageResponse> findById(long id) {
+        Optional<Image> image = imageRepository.findById(id);
+        ImageDTOV2 responseImage = convertImageToImageDTOV2.convert(image.get());
+
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(
+                DefiniteImageResponse.builder()
+                        .image(responseImage)
+                        .message("Изображение получено успешно.")
+                        .status(HttpStatus.OK)
+                        .statusCode(HttpStatus.OK.value())
+                        .build()
+        );
+        }
 }

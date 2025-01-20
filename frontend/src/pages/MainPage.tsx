@@ -18,7 +18,7 @@ export default function MainPage() {
                     element={<CreatePage/>}
                 ></Route>
                 <Route
-                    path = "/pins/image"
+                    path = "/pins/image/:id"
                     element={<CurrentImage/>}
                 ></Route>
             </Routes>

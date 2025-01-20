@@ -2,6 +2,8 @@ package com.linterest.backend.Controllers;
 
 import com.linterest.backend.DTO.ImageDTO;
 import com.linterest.backend.DTO.Response.CreateImageResponse;
+import com.linterest.backend.DTO.Response.DefiniteImageResponse;
+import com.linterest.backend.DTO.Response.ImagesResponse;
 import com.linterest.backend.DTO.Response.Response;
 import com.linterest.backend.Services.ImageService;
 import lombok.AllArgsConstructor;
@@ -30,11 +32,17 @@ public class ImageController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<?> findAll(
+    public ResponseEntity<ImagesResponse> findAll(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size
     ){
         return imageService.findAll(PageRequest.of(page,size));
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<DefiniteImageResponse> findById(
+            @PathVariable Long id){
+        return imageService.findById(id);
     }
 
 }

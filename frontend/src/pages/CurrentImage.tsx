@@ -1,16 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate } from 'react-router-dom'
-
+import {useNavigate, useParams} from 'react-router-dom'
+import axios from "axios";
+import {Images} from "../Interfaces/Images"
 
 
 export default function CurrentImage(){
 
     const navigate = useNavigate();
     const [isHover, setIsHover] = useState(false);
+    const { id } = useParams();
+    const [image, setImage] = useState<Images | null>();
+
 
     const handleClick = () => {
         navigate(`/pins`)
+    }
+
+    useEffect( () => {
+        handleGetImageById();
+    }, []);
+
+    const handleGetImageById = async () => {
+        const response = await axios(`http://localhost:8010/pins/get/${id}`);
+        setImage(response.data.image);
+        console.log(response.data.image);
     }
 
 
@@ -34,7 +48,9 @@ export default function CurrentImage(){
                         </div>
                     </div>
                     <div className="current-image__block__image-block__main-block">
-                        <div className="current-image__block__image-block__main-block__image"></div>
+                            { image ?
+                                <img className="current-image__block__image-block__main-block__image" src={`data:${image.contentType};base64,${image.image}`} alt = {image.name}/>
+                                :                         <div className="current-image__block__image-block__main-block__image"> </div>}
                         <div className="current-image__block__image-block__main-block__other"></div>
                     </div>
                 </div>

@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom'
-import {Images} from "../pages/ImagesPage";
+import {Images} from "../Interfaces/Images";
 
-export default function Image({name,image,contentType,fileName}:Images,key:bigint) {
+export default function Image({id,image,contentType,fileName}:Images,key:bigint) {
     const [isHover, setIsHover] = useState(false);
     const navigate = useNavigate();
 
     const handleClick = () => {
-        //TODO: ПЕРЕДЕЛАТЬ ПОТОМ ПОД ID КАЖДОЙ КАРТИНКИ
-        navigate(`/pins/image`)
+        navigate(`/pins/image/${id}`)
     }
 
     useEffect(() => {
-        console.log(contentType)
+        console.log(id)
     }, []);
 
 
