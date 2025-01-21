@@ -1,4 +1,29 @@
+.buttonSave{
+  position: absolute;
+  top:0;
+  right: 0;
+  z-index: 1;
+  width: 50%;
+  height: 50px;
+  margin: 10px;
 
+  border-radius: 40px;
+  border: none;
+
+  background-color: var(--main-background);
+  color: white;
+  transition: background-color 0.2s;
+
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bolder;
+
+  &:hover{
+    background-color: #047d80;
+    cursor: pointer;
+  }
+}
 
 .button{
   width: 100%;
@@ -38,4 +63,26 @@
     }
   }
 
+}
+
+.buttonCurrentImage{
+  height: 40px;
+  margin: 10px;
+
+  border-radius: 40px;
+  border: 2px var(--border-line) solid;
+
+  background-color: var(--main-background);
+  color: white;
+  transition: background-color 0.2s;
+
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bolder;
+
+  &:hover{
+    background-color: #047d80;
+    cursor: pointer;
+  }
 }

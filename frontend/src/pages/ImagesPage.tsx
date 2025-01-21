@@ -12,6 +12,10 @@ export default function ImagesPage (){
         handleGetImages();
     }, []);
 
+    useEffect( () => {
+        document.title = "Linterest";
+    }, [images]);
+
     const handleGetImages = async () => {
         const response =  await axios('http://localhost:8010/pins/get');
         setImages(response.data.images)

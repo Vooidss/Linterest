@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
+import Authorization from "./Authorization";
 
 
 export default function Header(){
@@ -11,15 +12,20 @@ export default function Header(){
     const activeLink: string = "button-active";
     const defaultLink: string = "button";
 
-    const handleClick = () => {
+    const[isActive, setIsActive] = useState(false);
+
+    const handleClickForBack = () => {
         navigate(`/pins`)
+    }
+    const handleClickForNavigateToProfile = () => {
+        navigate(`/profile`)
     }
 
     return(
         <div className="header">
             <div className="header__start">
                 <div className="header__start__logo">
-                    <div className="header__start__logo__img" onClick={() => handleClick()}/>
+                    <div className="header__start__logo__img" onClick={() => handleClickForBack()}/>
                 </div>
                 <NavLink to={"/pins"} className={({isActive}) => isActive ? activeLink : defaultLink}>
                     <button className="button">Главная</button>
@@ -35,11 +41,14 @@ export default function Header(){
                 </div>
             </div>
             <div className="header__profile">
-                <div className="header__profile__block">
-                    <button className="header__profile__block__button">Профиль</button>
+                <div className="header__profile__block" onClick={() => setIsActive(true)}>
+                    <button className="header__profile__block__button">
+                        {localStorage.getItem("token") ? "Профиль" : "Войти"}
+                    </button>
                     <CgProfile color="#ffffff" fontSize="20px"/>
                 </div>
             </div>
+            {isActive && <Authorization active = {isActive} setActive={setIsActive}/>}
         </div>
     )
 }

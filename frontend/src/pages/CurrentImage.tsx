@@ -4,7 +4,6 @@ import {useNavigate, useParams} from 'react-router-dom'
 import axios from "axios";
 import {Images} from "../Interfaces/Images"
 
-
 export default function CurrentImage(){
 
     const navigate = useNavigate();
@@ -19,7 +18,18 @@ export default function CurrentImage(){
 
     useEffect( () => {
         handleGetImageById();
+
+        if(image != null && image.name != null){
+            document.title = image.name;
+        }
     }, []);
+
+    useEffect( () => {
+        if(image != null && image.name != null){
+            document.title = image.name;
+        }
+    }, [image]);
+
 
     const handleGetImageById = async () => {
         const response = await axios(`http://localhost:8010/pins/get/${id}`);
@@ -49,9 +59,25 @@ export default function CurrentImage(){
                     </div>
                     <div className="current-image__block__image-block__main-block">
                             { image ?
-                                <img className="current-image__block__image-block__main-block__image" src={`data:${image.contentType};base64,${image.image}`} alt = {image.name}/>
+                                    <img className="current-image__block__image-block__main-block__image" id = "img" src={`data:${image.contentType};base64,${image.image}`} alt = {image.name}/>
                                 :                         <div className="current-image__block__image-block__main-block__image"> </div>}
-                        <div className="current-image__block__image-block__main-block__other"></div>
+                        <div className="current-image__block__image-block__main-block__other">
+                            <div className="current-image__block__image-block__main-block__other__buttons">
+                                <button className="buttonCurrentImage">Сохранить</button>
+                                <button className="buttonCurrentImage" style={{backgroundColor:"black"}}>Скачать</button>
+                            </div>
+                            <div className="current-image__block__image-block__main-block__other__name">
+                                <h1>{image?.name}</h1>
+                            </div>
+                            <div className="current-image__block__image-block__main-block__other__name">
+                                <h1>АВТОР</h1>
+                            </div>
+                            <div className="current-image__block__image-block__main-block__other__description">
+                                <p>
+                                    {image?.description}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

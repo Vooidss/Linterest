@@ -62,8 +62,7 @@
   justify-content: center;
 }
 .current-image__block__image-block {
-  width: 70%;
-  height: 90%;
+  max-width: 80%;
   background-color: #ffffff;
   display: grid;
   grid-template-columns: 1fr 12fr;
@@ -95,6 +94,24 @@
 .current-image__block__image-block__main-block__image {
   border: 1px var(--border-line) solid;
   border-radius: 40px 0 0 40px;
+  position: relative;
+  min-width: 450px;
+  min-height: 250px;
+  background-color: black;
+}
+.current-image__block__image-block__main-block__other {
+  display: grid;
+  grid-template-rows: 50px 50px 50px 1fr;
+}
+.current-image__block__image-block__main-block__other__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.current-image__block__image-block__main-block__other__name h1 {
+  margin: 0 0 0 15px;
+}
+.current-image__block__image-block__main-block__other__description p {
+  margin: 0 0 0 15px;
 }
 .current-image__other-image {
   border-top: 1px var(--border-line) solid;
@@ -295,28 +312,6 @@
   break-inside: avoid;
 }
 .image__self:hover {
-  cursor: pointer;
-}
-.image__safe {
-  position: absolute;
-  z-index: 1;
-  width: 50%;
-  height: 50px;
-  right: 0;
-  top: 0;
-  margin: 10px;
-  border-radius: 40px;
-  border: none;
-  background-color: var(--main-background);
-  color: white;
-  transition: background-color 0.2s;
-  font-family: "Lexend", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: bolder;
-}
-.image__safe:hover {
-  background-color: #047d80;
   cursor: pointer;
 }
 .image__block {
@@ -600,6 +595,29 @@ svg * {
   border: none;
 }
 
+.buttonSave {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 50%;
+  height: 50px;
+  margin: 10px;
+  border-radius: 40px;
+  border: none;
+  background-color: var(--main-background);
+  color: white;
+  transition: background-color 0.2s;
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bolder;
+}
+.buttonSave:hover {
+  background-color: #047d80;
+  cursor: pointer;
+}
+
 .button {
   width: 100%;
   display: flex;
@@ -639,10 +657,144 @@ svg * {
   background-color: #333333;
 }
 
+.buttonCurrentImage {
+  height: 40px;
+  margin: 10px;
+  border-radius: 40px;
+  border: 2px var(--border-line) solid;
+  background-color: var(--main-background);
+  color: white;
+  transition: background-color 0.2s;
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bolder;
+}
+.buttonCurrentImage:hover {
+  background-color: #047d80;
+  cursor: pointer;
+}
+
 :root {
   --main-background: #05aaad;
   --main-background-blackout: #047d80;
   --border-line: rgba(114, 113, 113, 0.52);
+}
+
+input {
+  font-weight: bolder;
+}
+input:focus {
+  outline: none;
+}
+
+.mainWindow {
+  z-index: 10;
+  background-color: rgba(78, 144, 157, 0.44);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: 0.5s;
+  pointer-events: none;
+}
+.mainWindow * {
+  font-weight: bolder;
+}
+.mainWindow.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mainWindow__authenticationWindow {
+  display: grid;
+  grid-template-rows: 20% 60% 20%;
+  background-color: #0a8ea9;
+  height: 350px;
+  width: 450px;
+  box-shadow: 0 15px 30px 0 rgba(59, 57, 57, 0.83), 0 5px 15px 0 rgba(31, 31, 31, 0.96);
+  transition: 1s;
+  opacity: 1;
+  border-radius: 7px;
+}
+.mainWindow__authenticationWindow__head {
+  padding: 10px;
+  margin: 10px 10px 40px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+.mainWindow__authenticationWindow__inputs {
+  display: grid;
+  font-weight: bold;
+  gap: 10px;
+}
+.mainWindow__authenticationWindow__input {
+  align-self: center;
+  text-align: center;
+  display: flex;
+  border-radius: 6px;
+}
+.mainWindow__authenticationWindow__input:nth-child(5) {
+  margin-bottom: 20px;
+}
+.mainWindow__authenticationWindow__input:nth-child(1), .mainWindow__authenticationWindow__input:nth-child(2), .mainWindow__authenticationWindow__input:nth-child(3), .mainWindow__authenticationWindow__input:nth-child(4), .mainWindow__authenticationWindow__input:nth-child(5) {
+  color: white;
+  padding-left: 6px;
+  background-color: #0a8ea9;
+  text-align: start;
+  font-size: 16px;
+  transform: scale(1.2);
+  justify-self: center;
+  border: 2px white solid;
+}
+.mainWindow__authenticationWindow__input:nth-child(1)::placeholder, .mainWindow__authenticationWindow__input:nth-child(2)::placeholder, .mainWindow__authenticationWindow__input:nth-child(3)::placeholder, .mainWindow__authenticationWindow__input:nth-child(4)::placeholder, .mainWindow__authenticationWindow__input:nth-child(5)::placeholder {
+  color: white;
+  font-size: 15px;
+  padding: 5px;
+}
+.mainWindow__authenticationWindow__error {
+  margin: 10px;
+  transform: scale(0);
+  color: #000000;
+  font-size: 16px;
+  transition: 1s;
+  opacity: 1;
+}
+.mainWindow__authenticationWindow__error.active {
+  transform: scale(1);
+}
+.mainWindow__authenticationWindow__under {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mainWindow__authenticationWindow__under__botton {
+  font-weight: bold;
+  margin: 10px;
+  height: 50%;
+  width: 50%;
+  justify-self: center;
+  cursor: pointer;
+  color: #0a8ea9;
+  border: 2px white solid;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 15px 30px 0 rgba(255, 255, 255, 0.38), 0 5px 15px 0 rgba(255, 255, 255, 0.31);
+}
+.mainWindow__authenticationWindow__under__botton:hover {
+  transform: scale(1.1);
+}
+.mainWindow__authenticationWindow__under__checkout {
+  color: white;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 /*# sourceMappingURL=main.css.map */

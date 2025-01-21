@@ -9,8 +9,7 @@
     justify-content: center;
 
     &__image-block{
-      width: 70%;
-      height: 90%;
+      max-width: 80%;
       background-color: #ffffff;
       display: grid;
       grid-template-columns: 1fr 12fr;
@@ -51,8 +50,33 @@
         &__image{
           border: 1px var(--border-line) solid;
           border-radius: 40px 0 0 40px;
+          position: relative;
+          min-width: 450px;
+          min-height: 250px;
+          background-color: black;
         }
-        &__other{}
+        &__other{
+          display: grid;
+          grid-template-rows: 50px 50px 50px 1fr ;
+
+          &__buttons{
+            display: flex;
+            justify-content: space-between;
+          }
+
+          &__name{
+            h1{
+              margin: 0 0 0 15px;
+            }
+          }
+
+          &__description{
+            p{
+              margin: 0 0 0 15px;
+            }
+          }
+
+        }
 
       }
     }

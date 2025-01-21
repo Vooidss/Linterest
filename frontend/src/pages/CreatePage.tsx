@@ -1,8 +1,9 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import { FaSkullCrossbones } from "react-icons/fa6";
+import React, {useCallback, useEffect, useState} from 'react';
+import {FaSkullCrossbones} from "react-icons/fa6";
 import InputDescriptionForNewPin from "../elements/InputDescriptionForNewPin";
 import axios from 'axios';
-import { CgClose } from "react-icons/cg";
+import {CgClose} from "react-icons/cg";
+import {User} from "../Interfaces/User";
 
 
 export default function CreatePage() {
@@ -12,19 +13,10 @@ export default function CreatePage() {
     const [tagsByInputWord, setTagsByInputWord] = useState<TagsByInputWord>({count:0, tags: []});
     const [chooseTags, setChooseTags] = useState<Tag[]>([]);
     const [isHover, setIsHover] = useState(false);
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
-            const selectedFile = event.target.files[0];
-            const preview = URL.createObjectURL(selectedFile);
-            const fileItem = { file: selectedFile, preview };
-            setFile(fileItem);
-            setRequestFile({
-                image: selectedFile,
-            });
-            event.target.value = "";
-        }
-    };
+    const [user, setUser] = useState<User>({
+        id: 0,
+        login: ''
+    });
 
     useEffect(() => {
         const tagIds = Array.isArray(chooseTags) ? chooseTags.map(tag => tag.id) : [];
@@ -35,10 +27,28 @@ export default function CreatePage() {
         }));
     }, [chooseTags]);
 
+    useEffect( () => {
+        document.title = "Создание";
+        handleGetCurrentUser();
+    }, []);
+
 
     useEffect(() => {
         console.log(requestFile.idsTag)
     }, [requestFile.idsTag]);
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            const selectedFile = event.target.files[0];
+            const preview = URL.createObjectURL(selectedFile);
+            const fileItem = { file: selectedFile, preview };
+            setFile(fileItem);
+            setRequestFile({
+                image: selectedFile
+            });
+            event.target.value = "";
+        }
+    };
 
     const handleRemoveFile = () => {
         setFile(null);
@@ -96,6 +106,11 @@ export default function CreatePage() {
             return;
         }
 
+        setRequestFile((prevData) => ({
+            ...prevData,
+            userId: user.id
+        }));
+        console.log(user.id);
         console.log(requestFile);
 
         try {
@@ -117,6 +132,29 @@ export default function CreatePage() {
     const handleMouseLeave = useCallback(() => {
         setIsHover(false);
     }, []);
+
+    const handleGetCurrentUser = async () => {
+        const response = await axios.get('http://localhost:8060/user/current',{
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        } );
+        setUser(response.data);
+    }
+
+
+    if(!localStorage.getItem("token")){
+        return(
+            <div style={{
+                display:"flex"
+            }}>
+                <h1 style={{
+                    margin:"0 auto"
+                }}>Пожалуйста, войдите в учётную запись</h1>
+            </div>
+        )
+    }
 
     return (
         <div className="create-page">
@@ -233,6 +271,7 @@ interface FileRequest {
     name?: string;
     description?: string;
     idsTag?: number[];
+    userId?: number;
 }
 
 interface TagsByInputWord {

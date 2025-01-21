@@ -37,7 +37,7 @@ export default function Image({id,image,contentType,fileName}:Images,key:bigint)
              onMouseLeave={() => setIsHover(false)}
         >
             {isHover ?
-                <button className="image__safe">
+                <button className="buttonSave">
                     Сохранить
                 </button> : ""}
             {isHover ?

@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class ImageDTO {
+    private Long userId;
     private MultipartFile image;
     private String name;
     private String description;

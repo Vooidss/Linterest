@@ -35,8 +35,7 @@ public class ImageService {
     public ResponseEntity<Response> addNewImage(ImageDTO imageDTO) {
         Image image = mapper.map(imageDTO,Image.class);
         image.setTags(tagService.convertInTagsForImageByIds(imageDTO.getIdsTag()));
-        //TODO: ДОДЕЛАТЬ С РЕАЛЬНЫМИ ПОЛЬЗОВАТЕЛЯМИ
-        image.setUserId(1L);
+        image.setUserId(imageDTO.getUserId());
         try{
             image.setImage(imageDTO.getImage().getBytes());
             image.setContentType(imageDTO.getImage().getContentType());
