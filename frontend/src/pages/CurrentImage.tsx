@@ -17,11 +17,7 @@ export default function CurrentImage(){
     }
 
     useEffect( () => {
-        handleGetImageById();
-
-        if(image != null && image.name != null){
-            document.title = image.name;
-        }
+            handleGetImageById();
     }, []);
 
     useEffect( () => {

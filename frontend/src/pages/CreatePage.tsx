@@ -29,7 +29,9 @@ export default function CreatePage() {
 
     useEffect( () => {
         document.title = "Создание";
-        handleGetCurrentUser();
+        if(localStorage.getItem("token")){
+            handleGetCurrentUser();
+        }
     }, []);
 
 

@@ -3,6 +3,7 @@ import {NavLink, useNavigate} from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import Authorization from "./Authorization";
+import Profile from "./ProfileWindow";
 
 
 export default function Header(){
@@ -48,7 +49,12 @@ export default function Header(){
                     <CgProfile color="#ffffff" fontSize="20px"/>
                 </div>
             </div>
-            {isActive && <Authorization active = {isActive} setActive={setIsActive}/>}
+            {
+                localStorage.getItem("token") ?
+                    isActive && <Profile active = {isActive} setActive={setIsActive}/>
+                    :
+                    isActive && <Authorization active = {isActive} setActive={setIsActive}/>
+            }
         </div>
     )
 }
