@@ -1,13 +1,12 @@
 package com.linterest.backend.Services;
 
-import com.linterest.backend.Converters.ConvertByteToMultipartFile;
 import com.linterest.backend.Converters.ConvertImageToImageDTOV2;
 import com.linterest.backend.DTO.ImageDTO;
 import com.linterest.backend.DTO.ImageDTOV2;
+import com.linterest.backend.DTO.PageDataDTO;
 import com.linterest.backend.DTO.Response.*;
 import com.linterest.backend.Models.Image;
 import com.linterest.backend.Repositories.ImageRepositories;
-import jakarta.ws.rs.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -19,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +29,7 @@ public class ImageService {
     private final ModelMapper mapper;
     private final TagService tagService;
     private final ConvertImageToImageDTOV2 convertImageToImageDTOV2;
+    private final PageService pageService;
 
     public ResponseEntity<Response> addNewImage(ImageDTO imageDTO) {
         Image image = mapper.map(imageDTO,Image.class);
@@ -62,14 +61,13 @@ public class ImageService {
                         .build());
     }
 
-    public ResponseEntity<ImagesResponse> findAll(PageRequest pageRequest) {
+    public ResponseEntity<ImagesResponse<ImageDTOV2>> findAll(PageRequest pageRequest) {
         Page<Image> imagePage = imageRepository.findAll(pageRequest);
-        List<Image> images = imagePage.getContent();
-        List<ImageDTOV2> resultImages= images.stream().map(convertImageToImageDTOV2::convert).toList();
+        PageDataDTO<ImageDTOV2> imageResponse = pageService.createPage(imagePage);
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(
-                ImagesResponse.builder()
-                        .images(resultImages)
+                ImagesResponse.<ImageDTOV2>builder()
+                        .images(imageResponse)
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
                         .message("Данные успешно возвращены.")

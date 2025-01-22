@@ -12,6 +12,7 @@ export default function Profile({active, setActive} : Active) {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        window.location.reload();
     }
 
     async function getUser() {
@@ -72,6 +73,7 @@ export default function Profile({active, setActive} : Active) {
                 <div className="main-window__window-profile__buttons">
                     <button
                         id="logout"
+                        onClick={() => handleLogout()}
                     >
                         Выйти
                     </button>

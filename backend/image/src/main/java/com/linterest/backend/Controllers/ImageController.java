@@ -1,6 +1,7 @@
 package com.linterest.backend.Controllers;
 
 import com.linterest.backend.DTO.ImageDTO;
+import com.linterest.backend.DTO.ImageDTOV2;
 import com.linterest.backend.DTO.Response.CreateImageResponse;
 import com.linterest.backend.DTO.Response.DefiniteImageResponse;
 import com.linterest.backend.DTO.Response.ImagesResponse;
@@ -32,10 +33,12 @@ public class ImageController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<ImagesResponse> findAll(
+    public ResponseEntity<ImagesResponse<ImageDTOV2>> findAll(
             @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size
+            @RequestParam(required = false, defaultValue = "25") int size
     ){
+        System.out.println(page);
+        System.out.println(size);
         return imageService.findAll(PageRequest.of(page,size));
     }
 

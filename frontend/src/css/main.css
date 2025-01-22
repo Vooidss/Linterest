@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 10%;
+  position: relative;
 }
 
 #main {
@@ -23,6 +23,7 @@
   position: relative;
   display: flex;
   justify-content: center;
+  margin-top: 100px;
 }
 .image_page__board {
   height: 100%;
@@ -510,9 +511,12 @@ svg * {
 
 .header {
   width: 100%;
-  height: 100%;
+  height: 100px;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
+  z-index: 10;
+  position: fixed;
+  background-color: white;
 }
 .header__start {
   display: grid;

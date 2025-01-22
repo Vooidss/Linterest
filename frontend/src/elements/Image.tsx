@@ -10,11 +10,6 @@ export default function Image({id,image,contentType,fileName}:Images,key:bigint)
         navigate(`/pins/image/${id}`)
     }
 
-    useEffect(() => {
-        console.log(id)
-    }, []);
-
-
     function downloadImage(image: any): void {
         const blob = new Blob([image], { type: contentType });
         const imageUrl = window.URL.createObjectURL(blob);
