@@ -13,6 +13,6 @@ public class ImageDTOV2 {
     private String description;
     private String fileName;
     private String contentType;
-    private List<TagsForImage> tags;
+    private List<TagsForImage> tags;    
     private byte[] image;
 }

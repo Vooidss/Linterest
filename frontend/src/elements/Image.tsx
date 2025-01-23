@@ -12,17 +12,18 @@ export default function Image({id,image,contentType,fileName}:Images,key:bigint)
 
     function downloadImage(image: any): void {
         const blob = new Blob([image], { type: contentType });
-        const imageUrl = window.URL.createObjectURL(blob);
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
 
-        const link = document.createElement('a');
-        link.href = imageUrl;
-        link.download = fileName;
+        a.href = url;
+        a.download = fileName;
 
-        document.body.appendChild(link);
+        document.body.appendChild(a);
 
-        link.click();
+        a.click();
+        a.remove();
 
-        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
     }
 
 

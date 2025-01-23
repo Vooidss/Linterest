@@ -149,7 +149,8 @@ export default function CreatePage() {
     if(!localStorage.getItem("token")){
         return(
             <div style={{
-                display:"flex"
+                display:"flex",
+                margin:"100px"
             }}>
                 <h1 style={{
                     margin:"0 auto"

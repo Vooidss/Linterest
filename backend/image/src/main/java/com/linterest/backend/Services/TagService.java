@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +40,9 @@ public class TagService {
     }
 
     protected List<TagsForImage> convertInTagsForImageByIds(List<Integer> ids){
+        if(ids == null){
+            return new ArrayList<>();
+        }
         return ids.stream().map(tagRepository::findTagById).collect(Collectors.toList());
     }
 
