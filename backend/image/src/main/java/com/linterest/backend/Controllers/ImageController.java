@@ -2,7 +2,6 @@ package com.linterest.backend.Controllers;
 
 import com.linterest.backend.DTO.ImageDTO;
 import com.linterest.backend.DTO.ImageDTOV2;
-import com.linterest.backend.DTO.Response.CreateImageResponse;
 import com.linterest.backend.DTO.Response.DefiniteImageResponse;
 import com.linterest.backend.DTO.Response.ImagesResponse;
 import com.linterest.backend.DTO.Response.Response;
@@ -12,10 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -25,6 +22,11 @@ import java.util.Arrays;
 public class ImageController {
 
     private final ImageService imageService;
+
+    @PostMapping("/getImageByUserId")
+    public ResponseEntity<?> getImageByUserId(@RequestBody List<Integer> idImages){
+        return imageService.getImageByUserId(idImages);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Response> addNewImage(

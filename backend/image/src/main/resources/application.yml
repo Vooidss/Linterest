@@ -45,4 +45,3 @@ eureka:
 server:
   port:
     8010
-

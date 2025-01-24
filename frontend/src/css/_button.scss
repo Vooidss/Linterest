@@ -24,6 +24,32 @@
     cursor: pointer;
   }
 }
+.buttonSaveIsPressed{
+  position: absolute;
+  top:0;
+  right: 0;
+  z-index: 1;
+  width: 50%;
+  height: 50px;
+  margin: 10px;
+
+  border-radius: 40px;
+  border: none;
+
+  background-color: rgba(70, 70, 70, 0.85);
+  color: white;
+  transition: background-color 0.2s;
+
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bolder;
+
+  &:hover{
+    background-color: rgba(199, 0, 24, 0.71);
+    cursor: pointer;
+  }
+}
 
 .button{
   width: 100%;

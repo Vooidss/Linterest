@@ -1,5 +1,6 @@
 package com.linterest.backend.Services;
 
+import com.linterest.backend.Converters.ConvertIdImageToImageDTOV2;
 import com.linterest.backend.Converters.ConvertImageToImageDTOV2;
 import com.linterest.backend.DTO.ImageDTO;
 import com.linterest.backend.DTO.ImageDTOV2;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +32,8 @@ public class ImageService {
     private final TagService tagService;
     private final ConvertImageToImageDTOV2 convertImageToImageDTOV2;
     private final PageService pageService;
+    private final ConvertIdImageToImageDTOV2 convertIdImageToImageDTOV2;
+    private final RequestGenerateService<List<ImageDTOV2>> requestGenerateService;
 
     public ResponseEntity<Response> addNewImage(ImageDTO imageDTO) {
         Image image = mapper.map(imageDTO,Image.class);
@@ -88,4 +92,26 @@ public class ImageService {
                         .build()
         );
         }
+
+    public ResponseEntity<ImageDTOV2Response> getImageByUserId(List<Integer> idImages) {
+
+        System.out.println(idImages);
+
+        List<Long> ids = idImages.stream()
+                .map(Integer::toUnsignedLong)
+                .toList();
+
+        List<ImageDTOV2> images = ids.stream().map(convertIdImageToImageDTOV2::convert).toList();
+
+        return ResponseEntity.ok().body(
+                ImageDTOV2Response.builder()
+                        .images(images)
+                        .message("Пины успешно доставлены")
+                        .status(HttpStatus.OK)
+                        .statusCode(HttpStatus.OK.value())
+                        .build()
+        );
+
+    }
 }
+

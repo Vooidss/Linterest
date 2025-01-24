@@ -1,13 +1,11 @@
-package com.linterest.backend.DTO;
+package com.onlinestore.backend.DTO.Image;
 
-import com.linterest.backend.Models.TagsForImage;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Data
-public class ImageDTOV2 {
+public class ImageDTO {
     private Long id;
     private String name;
     private String description;

@@ -1,4 +1,4 @@
-package com.onlinestore.backend.Services;
+package com.linterest.backend.Kafka;
 
 import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class KafkaProducer {
+public class KafkaProducer<T> {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, T> kafkaTemplate;
 
-    public void sendMessage(ProducerRecord<String, Object> message){
+    public void sendMessage(ProducerRecord<String, T> message){
         kafkaTemplate.send(message);
     }
 

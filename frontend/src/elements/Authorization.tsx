@@ -109,6 +109,8 @@ export default function Authorization({active, setActive} : Active) {
                 </h1>
                 <div className="mainWindow__authenticationWindow__inputs">
                     <input
+                        autoComplete="on"
+                        type="email"
                         required
                         className="mainWindow__authenticationWindow__input"
                         placeholder="Логин"
@@ -119,6 +121,8 @@ export default function Authorization({active, setActive} : Active) {
                         ))}
                     />
                     <input
+                        autoComplete="on"
+                        type="password"
                         required
                         className="mainWindow__authenticationWindow__input"
                         placeholder="Пароль"
@@ -183,12 +187,16 @@ export default function Authorization({active, setActive} : Active) {
                 </h1>
                 <div className="mainWindow__authenticationWindow__inputs">
                     <input
+                        autoComplete="on"
+                        type="email"
                         className="mainWindow__authenticationWindow__input"
                         placeholder="Логин"
                         value={login}
                         onChange={e => setLogin(e.target.value)}
                     />
                     <input
+                        autoComplete="on"
+                        type="password"
                         className="mainWindow__authenticationWindow__input"
                         placeholder="Пароль"
                         value={password}

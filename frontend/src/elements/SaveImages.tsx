@@ -3,12 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import {Images} from "../Interfaces/Images";
 import axios from "axios";
 
-export default function Image({id,image,contentType,fileName}:Images,key:bigint) {
+export default function SaveImages({id,image,contentType,fileName}:Images,key:bigint) {
     const [isHover, setIsHover] = useState(false);
     const navigate = useNavigate();
-
-    //TODO: Реализовать проверку сохранял ли пользователь уже данную картинку
-    const [isLiked, setIsLiked] = useState(false);
 
     const handleClick = () => {
         navigate(`/pins/image/${id}`)
@@ -23,10 +20,6 @@ export default function Image({id,image,contentType,fileName}:Images,key:bigint)
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 }
-            }).then( (response) => {
-                    if(response.data.httpStatusCode >= 200 && response.data.httpStatusCode < 300){
-                        setIsLiked(true);
-                    }
             })
         }
     }
@@ -47,7 +40,6 @@ export default function Image({id,image,contentType,fileName}:Images,key:bigint)
         window.URL.revokeObjectURL(url);
     }
 
-    const buttonIsNotPressed:string = "buttonSave";
     const buttonIsPressed:string = "buttonSaveIsPressed";
 
     return (
@@ -56,8 +48,8 @@ export default function Image({id,image,contentType,fileName}:Images,key:bigint)
              onMouseLeave={() => setIsHover(false)}
         >
             {isHover ?
-                <button className={buttonIsNotPressed} onClick = {() => handleLikeImage()}>
-                    Сохранить
+                <button className={buttonIsPressed} onClick = {() => handleLikeImage()}>
+                    Удалить
                 </button> : ""}
             {isHover ?
                 <div className="image__block">

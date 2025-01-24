@@ -69,6 +69,9 @@ export default function Profile({active, setActive} : Active) {
                     <NavLink to="Profile" className="main-window__window-profile__nav">
                         <li>Логин: {user.login}</li>
                     </NavLink>
+                    <NavLink to="/pins/save" className="main-window__window-profile__nav">
+                        <li>Сохраненые пины</li>
+                    </NavLink>
                 </ul>
                 <div className="main-window__window-profile__buttons">
                     <button

@@ -1,6 +1,7 @@
 .current-image{
   display: grid;
   grid-template-rows: 3fr 1fr;
+  margin-top: 100px;
 
   &__block{
     background-color: #ffffff;

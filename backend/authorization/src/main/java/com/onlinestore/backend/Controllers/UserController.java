@@ -2,6 +2,7 @@ package com.onlinestore.backend.Controllers;
 
 import java.util.Map;
 
+import com.onlinestore.backend.DTO.LikeDTO;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import com.onlinestore.backend.user.MyUser;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
@@ -31,4 +33,17 @@ public class UserController {
     public ResponseEntity<Map<String,Object>> updateUser(@RequestBody UpdateRequest newUser){
         return userService.updateUser(newUser);
     }
+
+    @PostMapping("/likeImage")
+    public ResponseEntity<?> likeImage(
+            @RequestBody LikeDTO likeDTO
+            ){
+        return userService.likeImage(likeDTO);
+    }
+
+    @GetMapping("/getSavesImage")
+    public ResponseEntity<?> getSaveImage(){
+        return userService.getSaveImageV2();
+    }
+
 }

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ImagesPage from "./ImagesPage";
 import CreatePage from "./CreatePage";
 import CurrentImage from "./CurrentImage";
+import SavesImagePage from "./SavesImagePage";
 
 export default function MainPage() {
     return (
@@ -21,6 +22,9 @@ export default function MainPage() {
                     path = "/pins/image/:id"
                     element={<CurrentImage/>}
                 ></Route>
+                <Route
+                    path="/pins/save"
+                    element={<SavesImagePage/>}></Route>
             </Routes>
         </div>
     )

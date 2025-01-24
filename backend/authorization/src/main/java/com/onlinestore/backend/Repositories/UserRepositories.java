@@ -10,7 +10,5 @@ import org.springframework.data.repository.query.Param;
 import com.onlinestore.backend.user.MyUser;
 
 public interface UserRepositories extends JpaRepository<MyUser, Integer> {
-    Optional<MyUser> findByName(String name);
     Optional<MyUser> findByLogin(String login);
-    Optional<MyUser> findByEmail(String email);
 }
