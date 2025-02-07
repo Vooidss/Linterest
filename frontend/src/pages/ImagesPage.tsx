@@ -10,20 +10,29 @@ export default function ImagesPage (){
     const [fetching, setFetching] = useState(true);
     const [totalCount, setTotalCount] = useState(0);
 
+    const [hashes, setHashes] = useState<string[]>([]);
+
     useEffect(() => {
-        console.log(totalCount);
-        console.log(images);
-        document.addEventListener('scroll', handlerScrollWindow);
-        return function (){
-            document.removeEventListener('scroll', handlerScrollWindow);
-        }
+        handleGetImages();
+        // document.addEventListener('scroll', handlerScrollWindow);
+        // return function (){
+        //     document.removeEventListener('scroll', handlerScrollWindow);
+        // }
     }, []);
 
     useEffect(() => {
-        if(fetching){
-            handleGetImages();
+        if(hashes){
+            hashes.map((hash) => {
+                handleGetImageByHash(hash);
+            })
         }
-    }, [fetching]);
+    }, [hashes]);
+
+    // useEffect(() => {
+    //     if(fetching){
+    //         handleGetImages();
+    //     }
+    // }, [fetching]);
 
     useEffect( () => {
         document.title = "Linterest";
@@ -36,21 +45,61 @@ export default function ImagesPage (){
         }
     }
 
-    const handleGetImages = async () => {
+    const handleGetImageByHash = async (hash:string) => {
+        try {
+            const response = await fetch(`http://localhost:8010/pins/get/${hash}`)
+                .then( async (response) => {
+                    const data = await response.blob();
+                    const url = URL.createObjectURL(data);
+                    const contentDisposition =  response.headers.get('content-disposition');
+                    let fileName = '';
+                    if (contentDisposition && contentDisposition.includes('filename=')) {
+                        const parts = contentDisposition.split('filename=');
+                        if (parts.length > 1 && parts[1]) {
 
-        const response =  await axios(`http://localhost:8010/pins/get?size=25&page=${currentPage}`)
-            .then(response => {
-                setImages([...images, ...response.data.images.data]);
-                setCurrentPage(prevState => prevState + 1);
-                setTotalCount(response.data.images.totalCount)
-            }).finally(() => setFetching(false));}
+                            fileName = parts[1].replace(/"/g, '').trim();
+
+                            const dotIndex = fileName.lastIndexOf('.');
+                            if (dotIndex > 0) {
+                                fileName = fileName.substring(0, dotIndex);
+                            }
+                        }
+                    }
+                    console.log('Имя файла без расширения:', fileName);
+                    setImages((prev) => [...prev, {imageSrc: url, image: data, hash: hash, name: fileName}]);
+                    console.log(data);
+                });
+        } catch (error) {
+            console.error("Ошибка загрузки изображения:", error);
+        }
+    };
+
+    const handleGetImages = async () => {
+        setFetching(true);
+        try {
+            const response = await axios.get("http://localhost:8010/pins/get/all");
+
+            setHashes(response.data.hashes);
+
+            console.log(response.data.hashes);
+        } catch (error) {
+            console.error("Ошибка загрузки изображения:", error);
+        } finally {
+            setFetching(false);
+        }
+    };
+
 
     return(
         <div className="image_page">
             <div className="image_page__board">
-                {images.map((image,index) =>
-                    <Image id = {image.id} image = {image.image} key = {index} contentType={image.contentType} fileName={image.fileName}/>
-                )}
+                {images.map((image, index) => {
+                    return (
+                        <div key={index} className="image_page__board__image">
+                            <Image imageSrc={image.imageSrc} image={image.image} hash={image.hash} name={image.name}/>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

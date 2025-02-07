@@ -8,8 +8,14 @@ export default function CurrentImage(){
 
     const navigate = useNavigate();
     const [isHover, setIsHover] = useState(false);
-    const { id } = useParams();
-    const [image, setImage] = useState<Images | null>();
+    const { hash } = useParams();
+    const [image, setImage] = useState<Images>({
+        imageSrc: "",
+        image: null,
+        hash: "",
+        name: "",
+        description: "",
+    });
 
 
     const handleClick = () => {
@@ -17,22 +23,54 @@ export default function CurrentImage(){
     }
 
     useEffect( () => {
-            handleGetImageById();
+        if(hash) {
+            handleGetImageByHash(hash);
+        }
     }, []);
 
     useEffect( () => {
         if(image != null && image.name != null){
             document.title = image.name;
+            console.log(image)
         }
     }, [image]);
 
 
-    const handleGetImageById = async () => {
-        const response = await axios(`http://localhost:8010/pins/get/${id}`);
-        setImage(response.data.image);
-        console.log(response.data.image);
-    }
+    const handleGetImageByHash = async (hash:string) => {
+        try {
+            const response = await fetch(`http://localhost:8010/pins/get/${hash}`)
+                .then( async (response) => {
+                    const data = await response.blob();
+                    const url = URL.createObjectURL(data);
+                    const contentDisposition =  response.headers.get('content-disposition');
+                    let fileName = '';
+                    if (contentDisposition && contentDisposition.includes('filename=')) {
+                        const parts = contentDisposition.split('filename=');
+                        if (parts.length > 1 && parts[1]) {
 
+                            fileName = parts[1].replace(/"/g, '').trim();
+
+                            const dotIndex = fileName.lastIndexOf('.');
+                            if (dotIndex > 0) {
+                                fileName = fileName.substring(0, dotIndex);
+                            }
+                        }
+                    }
+                    setImage({imageSrc: url, image: data, hash: hash, name: fileName});
+                    handleGetOtherInformationImage(hash);
+                });
+        } catch (error) {
+            console.error("Ошибка загрузки изображения:", error);
+        }
+    };
+    const handleGetOtherInformationImage = async (hash:string) => {
+        try {
+            const response = await axios.get(`http://localhost:8010/pins/get/other/${hash}`)
+            setImage((prev) => ({...prev, description: response.data.description}));
+        } catch (error) {
+            console.error("Ошибка загрузки изображения:", error);
+        }
+    };
 
     return(
         <div className="current-image">
@@ -54,8 +92,8 @@ export default function CurrentImage(){
                         </div>
                     </div>
                     <div className="current-image__block__image-block__main-block">
-                            { image ?
-                                    <img className="current-image__block__image-block__main-block__image" id = "img" src={`data:${image.contentType};base64,${image.image}`} alt = {image.name}/>
+                            { image && image.imageSrc !=null ?
+                                    <img className="current-image__block__image-block__main-block__image" id = "img" src={image.imageSrc} alt = {image.name}/>
                                 :                         <div className="current-image__block__image-block__main-block__image"> </div>}
                         <div className="current-image__block__image-block__main-block__other">
                             <div className="current-image__block__image-block__main-block__other__buttons">
@@ -63,14 +101,14 @@ export default function CurrentImage(){
                                 <button className="buttonCurrentImage" style={{backgroundColor:"black"}}>Скачать</button>
                             </div>
                             <div className="current-image__block__image-block__main-block__other__name">
-                                <h1>{image?.name}</h1>
+                                <h1>{image.name}</h1>
                             </div>
                             <div className="current-image__block__image-block__main-block__other__name">
                                 <h1>АВТОР</h1>
                             </div>
                             <div className="current-image__block__image-block__main-block__other__description">
                                 <p>
-                                    {image?.description}
+                                    {image.description}
                                 </p>
                             </div>
                         </div>
@@ -81,3 +119,4 @@ export default function CurrentImage(){
         </div>
     )
 }
+

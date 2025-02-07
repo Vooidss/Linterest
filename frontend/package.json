@@ -20,6 +20,7 @@
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "file-saver": "^2.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "prettier": "^3.3.3",
@@ -31,7 +32,7 @@
     "react-scripts": "^5.0.1",
     "react-transition-group": "^4.4.5",
     "stream-browserify": "^3.0.0",
-    "typescript": "^5.7.3",
+    "typescript": "^4.7.3",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
@@ -59,5 +60,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.7"
   }
 }
